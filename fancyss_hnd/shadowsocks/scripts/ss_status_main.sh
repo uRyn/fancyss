@@ -152,8 +152,8 @@ main(){
 		# conter
 		let COUNT++
 		
-		# random sleep 4s - 7s
-		local INTER=$(shuf -i 4000-7000 -n 1)
+		# random sleep 15s - 20s
+		local INTER=$(shuf -i 15000-20000 -n 1)
 		INTER=$(($INTER * 1000))
 		usleep $INTER
 	done

@@ -3008,9 +3008,9 @@ function save_failover() {
 										<div id="tablet_2" style="display: none;">
 											<table id="table_failover" style="margin:-1px 0px 0px 0px;" width="100%" border="1" align="center" cellpadding="4" cellspacing="0" bordercolor="#6b8fa3" class="FormTable" >
 												<script type="text/javascript">
-													var fa1 = ["2", "3", "4", "5"];
-													var fa2_1 = ["10", "15", "20"];
-													var fa2_2 = ["2", "3", "4", "5", "6", "7", "8"];
+													var fa1 = ["50", "3", "4", "5"];
+													var fa2_1 = ["70", "15", "20"];
+													var fa2_2 = ["50", "3", "4", "5", "6", "7", "8"];
 													var fa3_1 = ["10", "15", "20"];
 													var fa3_2 = ["100", "150", "200", "250", "300", "350", "400", "450", "500", "1000"];
 													var fa4_1 = [["0", "关闭插件"], ["1", "重启插件"], ["2", "切换到"]];
