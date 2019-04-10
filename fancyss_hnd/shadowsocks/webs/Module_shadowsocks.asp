@@ -95,10 +95,11 @@ function get_dbus_data() {
 			console.log(productid);
 			setTimeout("get_ss_status_data()", 500);
 		},
-		error:function(){
-			console.log("error!");
+		error: function(XmlHttpRequest, textStatus, errorThrown){
+			console.log(XmlHttpRequest.responseText);
 			alert("skipd数据读取错误，请格式化jffs分区后重新尝试！");
 		}
+		,timeout: 0
 	});
 }
 function conf2obj(obj, action) {
@@ -344,10 +345,8 @@ function save() {
 		}
 	}
 	// show different title when subscribe
-	var sel_node_info = $('.activate_icon').attr("id");
-	if(sel_node_info && E("ss_basic_enable").checked){
-		var sel_node = sel_node_info.split("_")[3];
-		var sel_mode = db_ss["ssconf_basic_mode_" + sel_node];
+	if(E("ss_basic_enable").checked){
+		var sel_mode = E("ss_basic_mode").value;
 		if (sel_mode == "1") {
 			db_ss["ss_basic_action"] = "1";
 		} else if (sel_mode == "2") {
@@ -1284,7 +1283,7 @@ function refresh_html() {
 	if (node_nu > nodeL){
 		$("#ss_basic_row").append('<option value="all">全部显示</option>');
 	}
-	E("ss_basic_row").value = db_ss["ss_basic_row"]||"10";
+	E("ss_basic_row").value = db_ss["ss_basic_row"]||nodeL;
 	
 	// define col width in different situation
 	if(node_nu && E("ss_basic_ping_node") != "off" && E("ss_basic_ping_node") != ""){
@@ -3078,7 +3077,7 @@ function save_failover() {
 										<div id="tablet_3" style="display: none;">
 											<table id="table_dns" width="100%" border="1" align="center" cellpadding="4" cellspacing="0" bordercolor="#6b8fa3" class="FormTable">
 												<script type="text/javascript">
-													var option_dnsc = [["1", "运营商DNS【自动获取】"], ["2", "阿里DNS1【223.5.5.5】"], ["3", "阿里DNS2【223.6.6.6】"], ["4", "114DNS1【114.114.114.114】"], ["5", "114DNS2【114.114.115.115】"], ["6", "cnnic DNS1【1.2.4.8】"], ["7", "cnnic DNS2【210.2.4.8】"], ["8", "oneDNS1【112.124.47.27】"], ["9", "oneDNS2【114.215.126.16】"], ["10", "百度DNS【180.76.76.76】"], ["11", "DNSpod DNS【119.29.29.29】"], ["12", "自定义DNS"]]
+													var option_dnsc = [["1", "运营商DNS【自动获取】"], ["2", "阿里DNS1【223.5.5.5】"], ["3", "阿里DNS2【223.6.6.6】"], ["4", "114DNS1【114.114.114.114】"], ["5", "114DNS2【114.114.115.115】"], ["6", "cnnic DNS1【1.2.4.8】"], ["7", "cnnic DNS2【210.2.4.8】"], ["8", "oneDNS1【117.50.11.11】"], ["9", "oneDNS2【117.50.11.22】"], ["10", "百度DNS【180.76.76.76】"], ["11", "DNSpod DNS【119.29.29.29】"], ["12", "自定义DNS"]];
 													var option_dnsf = [["3", "dns2socks"], ["4", "ss-tunnel"], ["1", "cdns"], ["5", "chinadns1"], ["2", "chinadns2"], ["6", "https_dns_proxy"], ["7", "v2ray_dns"], ["8", "直连"]];
 													var option_dnsr = option_dnsc;
 													var ph1 = "需端口号如：8.8.8.8:53"

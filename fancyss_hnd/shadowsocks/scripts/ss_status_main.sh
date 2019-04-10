@@ -1,5 +1,7 @@
 #!/bin/sh
 
+# shadowsocks script for HND/AXHND router with kernel 4.1.27/4.1.51 merlin firmware
+
 source /koolshare/scripts/base.sh
 
 LOGFILE_F=/tmp/upload/ssf_status.txt
@@ -49,11 +51,11 @@ failover_action(){
 			# 重启
 			start-stop-daemon -S -q -b -x /koolshare/ss/ssconfig.sh -- restart
 		elif [ "$ss_failover_s4_2" == "2" ];then
+			NEXT_NODE=$(($ssconf_basic_node + 1))
+			MAXT_NODE=$(dbus list ssconf_basic_|grep _name_ | cut -d "=" -f1|cut -d "_" -f4|sort -rn|head -n1)
 			[ "$FLAG" == "1" ] && echo "$LOGTIME1 fancyss：检测到连续$ss_failover_s1个状态故障，切换到节点列表的下个节点：[$(dbus get ssconf_basic_name_$NEXT_NODE)]！"
 			[ "$FLAG" == "2" ] && echo "$LOGTIME1 fancyss：检测到最近$ss_failover_s2_1个状态中，切换到节点列表的下个节点：[$(dbus get ssconf_basic_name_$NEXT_NODE)]！"
 			[ "$FLAG" == "3" ] && echo "$LOGTIME1 fancyss：检测到最近$ss_failover_s3_1个状态平均延迟:$PING超过$ss_failover_s3_2 ms，切换到节点列表的下个节点：[$(dbus get ssconf_basic_name_$NEXT_NODE)]！"
-			NEXT_NODE=$(($ss_failover_s4_3 + 1))
-			MAXT_NODE=$(dbus list ssconf_basic_|grep _name_ | cut -d "=" -f1|cut -d "_" -f4|sort -rn|head -n1)
 			if [ "$MAXT_NODE" == "1" ];then
 				echo "$LOGTIME1 fancyss：检测到你只有一个节点！无法切换到下一个节点！只好关闭插件了！"
 				dbus set ss_basic_enable="0"
@@ -137,8 +139,8 @@ main(){
 		# exit loop when fancyss not enabled
 		[ "`dbus get ss_basic_enable`" != "1" ] && exit
 		
-		if [ "`ps|grep ssconfig.sh|grep -v grep`" ];then
-			# wait until ssconfig.sh finished running
+		if [ "`ps|grep ssconfig.sh|grep -v grep`" ] || [ "`ps|grep ss_v2ray.sh|grep -v grep`" ];then
+			# wait until ssconfig.sh or ss_v2ray.sh finished running
 			continue
 		else
 			# call ss_status.sh to get status

@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# shadowsocks script for HND router with kernel 4.1.27 merlin firmware
+# shadowsocks script for HND/AXHND router with kernel 4.1.27/4.1.51 merlin firmware
 
 source /koolshare/scripts/base.sh
 LOGFILE_F=/tmp/upload/ssf_status.txt
@@ -64,7 +64,7 @@ get_foreign_status(){
 
 	# --- httping ---
 	local ret=`httping www.google.com.tw -s -Z -c1 -f -t 3 2>/dev/null|sed -n '2p'|sed 's/seq=0//g'|sed 's/([0-9]\+\sbytes),\s//g'`
-	echo $LOGTIME1 $ret [`dbus get ssconf_basic_name_$CURRENT`] >> $LOGFILE_F
+	echo $LOGTIME1 $ret "[`dbus get ssconf_basic_name_$CURRENT`]" >> $LOGFILE_F
 	local S1=`echo $ret|grep -Eo "200 OK"`
 	if [ -n "$S1" ]; then
 		local S2=`echo $ret|sed 's/time=//g'|awk '{printf "%.0f ms\n",$(NF -3)}'`
