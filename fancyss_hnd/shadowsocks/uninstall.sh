@@ -1,5 +1,7 @@
 #! /bin/sh
 
+# shadowsocks script for HND/AXHND router with kernel 4.1.27/4.1.51 merlin firmware
+
 sh /koolshare/ss/ssconfig.sh stop
 sh /koolshare/scripts/ss_conf.sh koolshare 3
 sleep 1
@@ -38,6 +40,7 @@ rm -rf /koolshare/bin/speederv2
 rm -rf /koolshare/bin/udp2raw
 rm -rf /koolshare/bin/v2ray
 rm -rf /koolshare/bin/v2ctl
+rm -rf /koolshare/bin/v2ray-plugin
 rm -rf /koolshare/bin/https_dns_proxy
 rm -rf /koolshare/bin/httping
 rm -rf /koolshare/bin/haveged
@@ -61,3 +64,4 @@ dbus remove softcenter_module_shadowsocks_version
 dbus remove ss_basic_enable
 dbus remove ss_basic_version_local
 dbus remove ss_basic_version_web
+dbus remove ss_basic_v2ray_version
